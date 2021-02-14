@@ -19,6 +19,8 @@ void filter(VectorXd &x, MatrixXd &P);
 
 int main()
 {
-
+	VectorXd my_vector(2);
+	my_vector << 1, 2;
+	cout << my_vector << endl;
 	return 0;
 }
