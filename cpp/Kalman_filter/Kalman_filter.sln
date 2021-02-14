@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1259
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kalman_filter", "Kalman_filter\Kalman_filter.vcxproj", "{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Debug|x64.ActiveCfg = Debug|x64
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Debug|x64.Build.0 = Debug|x64
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Debug|x86.ActiveCfg = Debug|Win32
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Debug|x86.Build.0 = Debug|Win32
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Release|x64.ActiveCfg = Release|x64
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Release|x64.Build.0 = Release|x64
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Release|x86.ActiveCfg = Release|Win32
+		{C5358D84-7DB5-4E42-8111-2A1A9B647D8B}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22891DE5-6148-49A4-ABF4-03C320D09F22}
+	EndGlobalSection
+EndGlobal
