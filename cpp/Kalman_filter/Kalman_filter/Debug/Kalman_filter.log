@@ -1,5 +1,2 @@
 ﻿  main.cpp
-  tracking.cpp
-c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\tracking.cpp(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
   Kalman_filter.vcxproj -> C:\Users\Mohamed Mehery\Documents\GitHub\Kalman-filter\cpp\Kalman_filter\Debug\Kalman_filter.exe
