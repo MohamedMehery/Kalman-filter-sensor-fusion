@@ -20,7 +20,7 @@ vector <VectorXd> measurements;
 void filter(VectorXd &x, MatrixXd &P);
 void test_eigen_lib(void);
 
-int main()
+int main3223()
 {
 	 // design the KF with 1D motion
 	x = VectorXd(2);
@@ -48,11 +48,11 @@ int main()
 
 	// create a list of measurements
 	VectorXd single_meas(1);
-	single_meas << 1;
-	measurements.push_back(single_meas);
 	single_meas << 2;
 	measurements.push_back(single_meas);
-	single_meas << 3;
+	single_meas << 4;
+	measurements.push_back(single_meas);
+	single_meas << 16;
 	measurements.push_back(single_meas);
 
 	// call Kalman filter algorithm
@@ -73,21 +73,30 @@ void filter(VectorXd &x, MatrixXd &P)
 
 		VectorXd z = measurements[n];
 		// TODO: YOUR CODE HERE
-		MatrixXd y = z - (H * x);
-		MatrixXd s = H * P * H.transpose() + R;
-		MatrixXd k = P * H.transpose() * s.inverse();
+		/**
+		 * KF Measurement update step
+		 */
+		VectorXd y = z - H * x;
+		MatrixXd Ht = H.transpose();
+		MatrixXd S = H * P * Ht + R;
+		MatrixXd Si = S.inverse();
+		MatrixXd K = P * Ht * Si;
 
-		// KF Measurement update step
-		x = x + (k * y);
-		P = (I - (k *H)) * P;
 		// new state
-		cout << "measurement x=" << endl << x << endl << endl;
-		cout << "measurement P=" << endl << P << endl << endl;
-		// KF Prediction step
-		x = (F * x) + u;
-		P = F * P*F.transpose();
-		cout << "Prediction x=" << endl << x << endl << endl;
-		cout << "Prediction P=" << endl << P << endl << endl; 
+		x = x + (K * y);
+		P = (I - K * H) * P;
+		cout << "New state \n";
+		cout << "x=" << endl << x << endl;
+		cout << "P=" << endl << P << endl;
+		/**
+		 * KF Prediction step
+		 */
+		x = F * x + u;
+		MatrixXd Ft = F.transpose();
+		P = F * P * Ft + Q;
+		cout << "Prediction step\n";
+		cout << "x=" << endl << x << endl;
+		cout << "P=" << endl << P << endl;
 	}
 }
 
