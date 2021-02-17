@@ -17,25 +17,25 @@ Tracking::Tracking() {
 
 	// state covariance matrix P
 	kf_.P_ = MatrixXd(4, 4);
-	kf_.P_ << 1, 0, 0, 0,
-			0, 1, 0, 0,
-			0, 0, 1000, 0,
-			0, 0, 0, 1000;
+	kf_.P_ <<   1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1000, 0,
+				0, 0, 0, 1000;
 
 
 	// measurement covariance
 	kf_.R_ = MatrixXd(2, 2);
 	kf_.R_ << 0.0225, 0,
-			0, 0.0225;
+		   	  0, 0.0225;
 
 	// measurement matrix
 	kf_.H_ = MatrixXd(2, 4);
 	kf_.H_ << 1, 0, 0, 0,
-			0, 1, 0, 0;
+			  0, 1, 0, 0;
 
 	// the initial transition matrix F_
 	kf_.F_ = MatrixXd(4, 4);
-	kf_.F_ << 1, 0, 1, 0,
+	kf_.F_ <<   1, 0, 1, 0,
 				0, 1, 0, 1,
 				0, 0, 1, 0,
 				0, 0, 0, 1;
