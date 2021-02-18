@@ -1,6 +1,18 @@
-﻿  main.cpp
-c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(132): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
-c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(133): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
-c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(134): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
-c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(135): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
+﻿  kalman_filter.cpp
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\kalman_filter.cpp(6): warning C4305: 'initializing': truncation from 'long double' to 'float'
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\kalman_filter.cpp(61): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\kalman_filter.cpp(62): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\kalman_filter.cpp(63): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\kalman_filter.cpp(64): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\kalman_filter.cpp(72): warning C4305: '=': truncation from 'double' to 'float'
+  main.cpp
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(85): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(86): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(87): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\main.cpp(88): warning C4244: 'initializing': conversion from 'const double' to 'float', possible loss of data
+  tracking.cpp
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\tracking.cpp(60): warning C4244: '=': conversion from 'const __int64' to 'long', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\tracking.cpp(66): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\mohamed mehery\documents\github\kalman-filter\cpp\kalman_filter\kalman_filter\tracking.cpp(67): warning C4244: '=': conversion from 'const __int64' to 'long', possible loss of data
+  Generating Code...
   Kalman_filter.vcxproj -> C:\Users\Mohamed Mehery\Documents\GitHub\Kalman-filter\cpp\Kalman_filter\Debug\Kalman_filter.exe

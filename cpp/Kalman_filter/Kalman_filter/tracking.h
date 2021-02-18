@@ -1,11 +1,12 @@
-#ifndef TRACKING_H_
-#define TRACKING_H_
 
+#ifndef FUSION_KF_H_
+#define FUSION_KF_H_
+
+#include "measurement_package.h"
 #include <vector>
 #include <string>
 #include <fstream>
 #include "kalman_filter.h"
-#include "measurement_package.h"
 
 class Tracking {
 public:
@@ -16,7 +17,7 @@ public:
 
 private:
 	bool is_initialized_;
-	int64_t previous_timestamp_;
+	long previous_timestamp_;
 
 	//acceleration noise components
 	float noise_ax;
@@ -24,4 +25,5 @@ private:
 
 };
 
-#endif  // TRACKING_H_
+#endif /* FUSION_KF_H_ */
+
