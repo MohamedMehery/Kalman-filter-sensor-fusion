@@ -77,7 +77,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 //    cout << "EKF: " << endl;
     ekf_.x_ = VectorXd(4);
 
-    if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
+    if (measurement_pack.sensor_type_ == MeasurementPackage::SONAR) {
       /**
       Convert radar from polar to cartesian coordinates and initialize state.
       */
@@ -92,7 +92,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
 
     }
-    else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
+    else if (measurement_pack.sensor_type_ == MeasurementPackage::DVL) {
       /**
       Initialize state.
       */
@@ -149,7 +149,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
      * Update the state and covariance matrices.
    */
 
-  if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
+  if (measurement_pack.sensor_type_ == MeasurementPackage::SONAR) {
     // Radar updates
 
     H_jacobian = tools.CalculateJacobian(ekf_.x_);

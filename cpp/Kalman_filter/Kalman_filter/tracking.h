@@ -13,6 +13,7 @@ public:
 	Tracking();
 	virtual ~Tracking();
 	void ProcessMeasurement(const MeasurementPackage &measurement_pack);
+	void __init(const MeasurementPackage &measurement_pack);
 	KalmanFilter kf_;
 
 private:

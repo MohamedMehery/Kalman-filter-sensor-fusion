@@ -5,6 +5,8 @@
 #include "Eigen/Dense"
 #include "measurement_package.h"
 #include "tracking.h"
+#include "tools.h"
+#include "FusionEKF.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -15,9 +17,6 @@ using std::istringstream;
 using std::string;
 using std::vector;
 
-MatrixXd CalculateJacobian(const VectorXd& x_state);
-VectorXd CalculateRMSE(const vector<VectorXd> &estimations,
-	const vector<VectorXd> &ground_truth);
 
 int main() {
 
@@ -25,14 +24,18 @@ int main() {
 	 * Set Measurements
 	 */
 	MeasurementPackage meas_package;
-	Tracking tracking;
-
+	Tools tools;
+	FusionEKF fusionEKF;
 
 	meas_package.sensor_type_ = MeasurementPackage::DVL;
-	meas_package.raw_measurements_ = VectorXd(3);
-	meas_package.raw_measurements_ << 1, 2, 4;
-	tracking.ProcessMeasurement(meas_package);
-	
+	meas_package.raw_measurements_ = VectorXd(2);
+	meas_package.raw_measurements_ << 8.44818	,0.251553;
+	meas_package.timestamp_ = 1477010443449633;
+	fusionEKF.ProcessMeasurement(meas_package);
+
+	meas_package.raw_measurements_ << 8.45582,	0.253997	;
+	meas_package.timestamp_ = 1477010443549747;
+	fusionEKF.ProcessMeasurement(meas_package);
 
 	/**
 	 * Compute the Jacobian Matrix
@@ -43,7 +46,7 @@ int main() {
 	VectorXd x_predicted(4);
 	x_predicted << 1, 2, 0.2, 0.4;
 
-	MatrixXd Hj = CalculateJacobian(x_predicted);
+	MatrixXd Hj = tools.CalculateJacobian(x_predicted);
 
 	cout << "Hj:" << endl << Hj << endl;
 
@@ -73,71 +76,8 @@ int main() {
 	ground_truth.push_back(g);
 
 	// call the CalculateRMSE and print out the result
-	cout << CalculateRMSE(estimations, ground_truth) << endl;
+	cout << tools.CalculateRMSE(estimations, ground_truth) << endl;
 
 	return 0;
 }
 
-MatrixXd CalculateJacobian(const VectorXd& x_state) {
-
-	MatrixXd Hj(3, 4);
-	// recover state parameters
-	float px = x_state(0);
-	float py = x_state(1);
-	float vx = x_state(2);
-	float vy = x_state(3);
-
-	// pre-compute a set of terms to avoid repeated calculation
-	float c1 = px * px + py * py;
-	float c2 = sqrt(c1);
-	float c3 = (c1*c2);
-
-	// check division by zero
-	if (fabs(c1) < 0.0001) {
-		cout << "CalculateJacobian () - Error - Division by Zero" << endl;
-		return Hj;
-	}
-
-	// compute the Jacobian matrix
-	Hj << (px / c2), (py / c2), 0, 0,
-		-(py / c1), (px / c1), 0, 0,
-		py*(vx*py - vy * px) / c3, px*(px*vy - py * vx) / c3, px / c2, py / c2;
-
-	return Hj;
-}
-
-
-VectorXd CalculateRMSE(const vector<VectorXd> &estimations,
-	const vector<VectorXd> &ground_truth) {
-
-	VectorXd rmse(4);
-	rmse << 0, 0, 0, 0;
-
-	// check the validity of the following inputs:
-	//  * the estimation vector size should not be zero
-	//  * the estimation vector size should equal ground truth vector size
-	if (estimations.size() != ground_truth.size()
-		|| estimations.size() == 0) {
-		cout << "Invalid estimation or ground_truth data" << endl;
-		return rmse;
-	}
-
-	// accumulate squared residuals
-	for (unsigned int i = 0; i < estimations.size(); ++i) {
-
-		VectorXd residual = estimations[i] - ground_truth[i];
-
-		// coefficient-wise multiplication
-		residual = residual.array()*residual.array();
-		rmse += residual;
-	}
-
-	// calculate the mean
-	rmse = rmse / estimations.size();
-
-	// calculate the squared root
-	rmse = rmse.array().sqrt();
-
-	// return the result
-	return rmse;
-}

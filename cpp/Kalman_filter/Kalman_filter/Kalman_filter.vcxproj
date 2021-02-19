@@ -126,14 +126,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FusionEKF.cpp" />
     <ClCompile Include="kalman_filter.cpp" />
     <ClCompile Include="Kalman_filter_main_single_file.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tools.cpp" />
     <ClCompile Include="tracking.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FusionEKF.h" />
     <ClInclude Include="kalman_filter.h" />
     <ClInclude Include="measurement_package.h" />
+    <ClInclude Include="tools.h" />
     <ClInclude Include="tracking.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
