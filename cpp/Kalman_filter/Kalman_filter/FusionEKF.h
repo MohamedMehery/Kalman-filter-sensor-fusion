@@ -40,9 +40,9 @@ private:
 
   // tool object used to compute Jacobian and RMSE
   Tools tools;
-  Eigen::MatrixXd R_laser_;    // laser measurement noise
-  Eigen::MatrixXd R_radar_;    // radar measurement noise
-  Eigen::MatrixXd H_laser_;    // measurement function for laser
+  Eigen::MatrixXd R_DVL_;    // laser measurement noise
+  Eigen::MatrixXd R_SONAR_;    // radar measurement noise
+  Eigen::MatrixXd H_DVL_;    // measurement function for laser
   Eigen::MatrixXd H_jacobian;         // measurement function for radar
 
   float noise_ax;
