@@ -72,6 +72,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\Mohamed Mehery\Documents\GitHub\Kalman-filter\cpp\Kalman_filter\eigen3;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -130,8 +133,10 @@
     <ClCompile Include="kalman_filter.cpp" />
     <ClCompile Include="Kalman_filter_main_single_file.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_ekf.cpp" />
     <ClCompile Include="tools.cpp" />
     <ClCompile Include="tracking.cpp" />
+    <ClCompile Include="ukf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FusionEKF.h" />
@@ -139,6 +144,7 @@
     <ClInclude Include="measurement_package.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="tracking.h" />
+    <ClInclude Include="ukf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
