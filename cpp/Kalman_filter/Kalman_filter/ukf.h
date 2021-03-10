@@ -24,9 +24,9 @@ public:
 	void GenerateSigmaPoints(Eigen::MatrixXd* Xsig_out);
 	void AugmentedSigmaPoints(Eigen::MatrixXd* Xsig_out);
 	void SigmaPointPrediction(Eigen::MatrixXd* Xsig_out);
-/*	void PredictMeanAndCovariance(Eigen::VectorXd* x_pred,
+	void PredictMeanAndCovariance(Eigen::VectorXd* x_pred,
 		Eigen::MatrixXd* P_pred);
-	void PredictRadarMeasurement(Eigen::VectorXd* z_out,
+/*	void PredictRadarMeasurement(Eigen::VectorXd* z_out,
 		Eigen::MatrixXd* S_out);
 	void UpdateState(Eigen::VectorXd* x_out,
 		Eigen::MatrixXd* P_out);						*/

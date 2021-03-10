@@ -212,48 +212,123 @@ void UKF::SigmaPointPrediction(MatrixXd* Xsig_out) {
 		double mu_a = Xsig_aug(5, i);
 		double mu_yawdd = Xsig_aug(6, i);
 	
-	// predict state values
-	double px_p, py_p;
+		// predict state values
+		double px_p, py_p;
 
-	 // avoid division by zero with yawd
-	if (fabs(yawd) > 0.0001)
-	{
-		px_p = P_x + v / yawd * (sin(yaw + yawd * delta_t) - sin(yaw));
-		py_p = P_y + v / yawd * (cos(yaw) - cos(yaw + yawd * delta_t));
+		 // avoid division by zero with yawd
+		if (fabs(yawd) > 0.0001)
+		{
+			px_p = P_x + v / yawd * (sin(yaw + yawd * delta_t) - sin(yaw));
+			py_p = P_y + v / yawd * (cos(yaw) - cos(yaw + yawd * delta_t));
+		}
+		else
+		{
+			px_p = P_x + v * delta_t*cos(yaw);
+			py_p = P_y + v * delta_t*sin(yaw);
+		}
+
+		double v_p = v;
+		double yaw_p = yaw + yawd * delta_t;
+		double yawd_p = yawd;
+
+		// add noise
+		px_p = px_p + 0.5*mu_a*delta_t*delta_t * cos(yaw);
+		py_p = py_p + 0.5*mu_a*delta_t*delta_t * sin(yaw);
+		v_p = v_p + mu_a * delta_t;
+
+		yaw_p = yaw_p + 0.5*mu_yawdd*delta_t*delta_t;
+		yawd_p = yawd_p + mu_yawdd * delta_t;
+
+		// write predicted sigma point into right column
+		Xsig_pred(0, i) = px_p;
+		Xsig_pred(1, i) = py_p;
+		Xsig_pred(2, i) = v_p;
+		Xsig_pred(3, i) = yaw_p;
+		Xsig_pred(4, i) = yawd_p;
+
 	}
-	else
-	{
-		px_p = P_x + v * delta_t*cos(yaw);
-		py_p = P_y + v * delta_t*sin(yaw);
+		 /**
+		  * Student part end
+		  */
+
+		  // print result
+		std::cout << "Xsig_pred = " << std::endl << Xsig_pred << std::endl;
+
+		// write result
+		*Xsig_out = Xsig_pred;
+}
+
+void UKF::PredictMeanAndCovariance(VectorXd* x_out, MatrixXd* P_out) {
+
+	// set state dimension
+	int n_x = 5;
+
+	// set augmented dimension
+	int n_aug = 7;
+
+	// define spreading parameter
+	double lambda = 3 - n_aug;
+
+	// create example matrix with predicted sigma points
+	MatrixXd Xsig_pred = MatrixXd(n_x, 2 * n_aug + 1);
+	Xsig_pred <<
+		5.9374, 6.0640, 5.925, 5.9436, 5.9266, 5.9374, 5.9389, 5.9374, 5.8106, 5.9457, 5.9310, 5.9465, 5.9374, 5.9359, 5.93744,
+		1.48, 1.4436, 1.660, 1.4934, 1.5036, 1.48, 1.4868, 1.48, 1.5271, 1.3104, 1.4787, 1.4674, 1.48, 1.4851, 1.486,
+		2.204, 2.2841, 2.2455, 2.2958, 2.204, 2.204, 2.2395, 2.204, 2.1256, 2.1642, 2.1139, 2.204, 2.204, 2.1702, 2.2049,
+		0.5367, 0.47338, 0.67809, 0.55455, 0.64364, 0.54337, 0.5367, 0.53851, 0.60017, 0.39546, 0.51900, 0.42991, 0.530188, 0.5367, 0.535048,
+		0.352, 0.29997, 0.46212, 0.37633, 0.4841, 0.41872, 0.352, 0.38744, 0.40562, 0.24347, 0.32926, 0.2214, 0.28687, 0.352, 0.318159;
+
+	// create vector for weights
+	VectorXd weights = VectorXd(2 * n_aug + 1);
+
+	// create vector for predicted state
+	VectorXd x = VectorXd(n_x);
+
+	// create covariance matrix for prediction
+	MatrixXd P = MatrixXd(n_x, n_x);
+	
+
+	/**
+	 * Student part begin
+	 */
+
+	// set weights
+	double weight_0 = lambda / (lambda + n_aug);
+	weights(0) = weight_0;
+	for (int i = 1; i < 2 * n_aug + 1; ++i) {  // 2n+1 weights
+		double weight = 0.5 / (n_aug + lambda);
+		weights(i) = weight;
 	}
 
-	double v_p = v;
-	double yaw_p = yaw + yawd * delta_t;
-	double yawd_p = yawd;
+	 // predict state mean
+	x.fill(0.0);
+	for (int i = 0; i < 2 * n_aug + 1; ++i) {  // iterate over sigma points
+		x = x + weights(i) * Xsig_pred.col(i);
+	}
 
-	// add noise
-	px_p = px_p + 0.5*mu_a*delta_t*delta_t * cos(yaw);
-	py_p = py_p + 0.5*mu_a*delta_t*delta_t * sin(yaw);
-	v_p = v_p + mu_a * delta_t;
+	//prediction state covariance matrix
+	P.fill(0.0);
+	for (int i = 0; i < 2 * n_aug + 1; ++i)
+	{ // iterate over sigma points
+		// state difference 
+		VectorXd x_diff = Xsig_pred.col(i) - x;
+		// angle normalization
+		while (x_diff(3) > EIGEN_PI) x_diff(3) -= 2.0 * EIGEN_PI;
+		while (x_diff(3) < EIGEN_PI) x_diff(3) += 2.0 * EIGEN_PI;
 
-	yaw_p = yaw_p + 0.5*mu_yawdd*delta_t*delta_t;
-	yawd_p = yawd_p + mu_yawdd * delta_t;
-
-	// write predicted sigma point into right column
-	Xsig_pred(0, i) = px_p;
-	Xsig_pred(1, i) = py_p;
-	Xsig_pred(2, i) = v_p;
-	Xsig_pred(3, i) = yaw_p;
-	Xsig_pred(4, i) = yawd_p;
-
+		P = P + weights(i) * x_diff * x_diff.transpose();
 	}
 	 /**
 	  * Student part end
 	  */
 
 	  // print result
-	std::cout << "Xsig_pred = " << std::endl << Xsig_pred << std::endl;
+	std::cout << "Predicted state" << std::endl;
+	std::cout << x << std::endl;
+	std::cout << "Predicted covariance matrix" << std::endl;
+	std::cout << P << std::endl;
 
 	// write result
-	*Xsig_out = Xsig_pred;
+	*x_out = x;
+	*P_out = P;
 }
